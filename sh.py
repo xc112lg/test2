@@ -1,37 +1,38 @@
 import requests
 import json
+from datetime import datetime
 
 # load cookie json from text file
 with open("cookie.txt", "r", encoding="utf-8") as f:
-    cookies_json = json.loads(f.read())
+    cookie_json = json.load(f)
 
-# convert cookie json to dict
-cookies = {c["name"]: c["value"] for c in cookies_json}
+# convert to dict
+cookies = {c["name"]: c["value"] for c in cookie_json}
 
 headers = {
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "user-agent": "Mozilla/5.0",
     "accept": "application/json",
     "referer": "https://shopee.ph/user/voucher-wallet",
     "x-requested-with": "XMLHttpRequest"
 }
 
-url = "https://shopee.ph/api/v2/voucher_wallet/vouchers"
+url = "https://shopee.ph/api/v2/voucher_wallet/get_voucher_list"
 
 params = {
     "voucher_status": 1,
-    "limit": 100,
-    "offset": 0
+    "offset": 0,
+    "limit": 100
 }
 
 r = requests.get(url, headers=headers, cookies=cookies, params=params)
 
-print("STATUS:", r.status_code)
+print("Status:", r.status_code)
 
 data = r.json()
-print(data)
 
 if "data" not in data:
-    print("No voucher data found")
+    print("API response:")
+    print(data)
     exit()
 
 vouchers = data["data"].get("vouchers", [])
@@ -39,7 +40,16 @@ vouchers = data["data"].get("vouchers", [])
 print(f"\nFound {len(vouchers)} vouchers\n")
 
 for v in vouchers:
+    name = v.get("voucher_name")
+    code = v.get("voucher_code")
+    min_spend = v.get("min_spend")
+    end = v.get("end_time")
+
+    if end:
+        end = datetime.fromtimestamp(end).strftime("%Y-%m-%d %H:%M:%S")
+
     print("------")
-    print("Name:", v.get("voucher_name"))
-    print("Code:", v.get("voucher_code"))
-    print("Min Spend:", v.get("min_spend"))
+    print("Name:", name)
+    print("Code:", code)
+    print("Min Spend:", min_spend)
+    print("Expires:", end)
