@@ -3,8 +3,14 @@ set -euo pipefail
 
 ZIP_URL="${1:-}"
 
+if [ $# -ge 1 ]; then
+    ZIP_URL="$1"
+else
+    read -rp "Enter ROM ZIP URL: " ZIP_URL
+fi
+
 if [ -z "$ZIP_URL" ]; then
-    echo "Usage: $0 <rom_zip_url>"
+    echo "No URL provided"
     exit 1
 fi
 
