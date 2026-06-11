@@ -33,7 +33,7 @@ fi
 
 echo "[*] Decompressing system.new.dat.br..."
 brotli --decompress system.new.dat.br
-
+rm -f system.new.dat.br
 echo "[*] Downloading sdat2img..."
 curl -sLo sdat2img.py \
     https://raw.githubusercontent.com/xpirt/sdat2img/master/sdat2img.py
