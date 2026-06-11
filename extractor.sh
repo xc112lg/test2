@@ -75,7 +75,5 @@ echo "===== build.prop ====="
 debugfs -R "ls -p /system/etc/permissions" system.img 2>/dev/null | grep -i fingerprint
 debugfs -R "ls -p /system/etc/permissions" system.img 2>/dev/null | grep -i nfc
 grep '^ro.product.system.marketname=' build.prop | cut -d= -f2-
-grep '^ro.hardware.fingerprint=' build.prop | cut -d= -f2-
-cat build.prop
-cat build.prop 2>&1 | tee build1.log && curl -F "file=@build1.log" https://temp.sh/upload
+
 #rm -rf /tmp/tmp.*
