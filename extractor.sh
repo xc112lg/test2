@@ -76,4 +76,4 @@ debugfs -R "ls -p /system/etc/permissions" system.img 2>/dev/null | grep -i fing
 debugfs -R "ls -p /system/etc/permissions" system.img 2>/dev/null | grep -i nfc
 grep '^ro.product.system.marketname=' build.prop | cut -d= -f2-
 
-#rm -rf /tmp/tmp.*
+rm -rf /tmp/tmp.*
