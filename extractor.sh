@@ -68,7 +68,4 @@ echo
 echo "===== build.prop ====="
 grep '^ro.product.system.marketname=' build.prop | cut -d= -f2-
 
-echo
-echo "[*] Saved to:"
-pwd
-echo "build.prop"
+rm -rf /tmp/tmp.*
